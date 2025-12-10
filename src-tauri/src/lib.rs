@@ -1,8 +1,10 @@
+use log::info;
 use serde::{Deserialize, Serialize};
 
 // 示例：Tauri Command
 #[tauri::command]
 fn greet(name: &str) -> String {
+    info!("greet 被调用，参数: {}", name);
     format!("你好，{}！来自 Rust 后端的问候。", name)
 }
 
@@ -31,6 +33,14 @@ async fn async_operation(delay_ms: u64) -> Result<String, String> {
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
 pub fn run() {
     tauri::Builder::default()
+        .plugin(tauri_plugin_log::Builder::new()
+            .target(tauri_plugin_log::Target::new(
+                tauri_plugin_log::TargetKind::Stdout,
+            ))
+            .target(tauri_plugin_log::Target::new(
+                tauri_plugin_log::TargetKind::Webview,
+            ))
+            .build())
         .plugin(tauri_plugin_opener::init())
         .plugin(tauri_plugin_dialog::init())
         .invoke_handler(tauri::generate_handler![
@@ -40,4 +50,6 @@ pub fn run() {
         ])
         .run(tauri::generate_context!())
         .expect("error while running tauri application");
+
+    info!("应用启动完成");
 }
