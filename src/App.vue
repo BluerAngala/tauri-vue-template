@@ -22,7 +22,16 @@ const route = useRoute()
             <RouterLink to="/" :class="{ active: route.path === '/' }">首页</RouterLink>
           </li>
           <li>
-            <RouterLink to="/demo" :class="{ active: route.path === '/demo' }">演示</RouterLink>
+            <RouterLink to="/demo" :class="{ active: route.path === '/demo' }">Tauri</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/animation" :class="{ active: route.path === '/animation' }">动画</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/icons" :class="{ active: route.path === '/icons' }">图标</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/hooks" :class="{ active: route.path === '/hooks' }">Hooks</RouterLink>
           </li>
         </ul>
         <ThemeSelector />

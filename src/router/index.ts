@@ -12,6 +12,21 @@ const routes: RouteRecordRaw[] = [
     name: 'Demo',
     component: () => import('@/views/Demo.vue'),
   },
+  {
+    path: '/animation',
+    name: 'Animation',
+    component: () => import('@/views/Animation.vue'),
+  },
+  {
+    path: '/icons',
+    name: 'Icons',
+    component: () => import('@/views/Icons.vue'),
+  },
+  {
+    path: '/hooks',
+    name: 'Hooks',
+    component: () => import('@/views/Hooks.vue'),
+  },
 ]
 
 const router = createRouter({
