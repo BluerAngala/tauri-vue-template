@@ -6,6 +6,7 @@ import { Icon } from '@iconify/vue'
 
 // 列表自动动画
 const [listParent] = useAutoAnimate()
+void listParent // 在模板中使用
 const items = ref(['项目 1', '项目 2', '项目 3'])
 let counter = 4
 
@@ -45,6 +46,7 @@ const cards = ref([
   { id: 3, title: '卡片 3', icon: 'mdi:star' },
 ])
 const [cardsParent] = useAutoAnimate()
+void cardsParent // 在模板中使用
 </script>
 
 <template>
