@@ -13,6 +13,10 @@
 - 📝 **日志系统** - 前后端统一日志，方便调试
 - 🔧 **ESLint + Prettier** - 代码规范和格式化
 - 🚀 **GitHub Actions** - 自动化 CI/CD，多平台打包
+- ✨ **@vueuse/motion** - 声明式动画效果
+- 🎭 **@iconify/vue** - 20万+ 图标库
+- 🪄 **auto-animate** - 自动列表动画
+- 🧰 **VueUse** - 200+ 实用组合式函数
 
 ## 📁 项目结构
 
@@ -20,6 +24,7 @@
 src/
 ├── assets/          # 静态资源
 ├── components/      # 通用组件
+│   └── ThemeSelector.vue  # 主题选择器
 ├── composables/     # 组合式函数
 │   ├── useTheme.ts  # 主题切换
 │   └── useLogger.ts # 日志工具
@@ -28,6 +33,11 @@ src/
 ├── styles/          # 全局样式
 ├── types/           # TypeScript 类型
 ├── views/           # 页面组件
+│   ├── Home.vue     # 首页
+│   ├── Demo.vue     # Tauri 功能演示
+│   ├── Animation.vue # 动画示例
+│   ├── Icons.vue    # 图标库示例
+│   └── Hooks.vue    # VueUse 示例
 ├── App.vue          # 根组件
 └── main.ts          # 入口文件
 
@@ -73,7 +83,7 @@ pnpm tauri build
 | `pnpm tauri dev` | 启动 Tauri 开发模式 |
 | `pnpm build` | 构建前端 |
 | `pnpm tauri build` | 打包桌面应用 |
-| `pnpm lint` | ESLint 检查 |
+| `pnpm lint` | ESLint 检查并修复 |
 | `pnpm format` | Prettier 格式化 |
 | `pnpm type-check` | TypeScript 类型检查 |
 
@@ -104,10 +114,95 @@ warn!("这是一条警告");
 error!("这是一条错误");
 ```
 
-日志会同时输出到：
-- 浏览器控制台（开发模式）
-- 终端（Rust 后端）
-- Tauri 日志文件
+## ✨ 动画效果
+
+### Motion 动画
+
+```vue
+<script setup>
+import { useMotion } from '@vueuse/motion'
+
+const boxRef = ref()
+const { apply } = useMotion(boxRef, {
+  initial: { scale: 1 },
+  enter: { scale: 1 },
+})
+
+function bounce() {
+  apply({ scale: 1.2 })
+  setTimeout(() => apply({ scale: 1 }), 150)
+}
+</script>
+
+<template>
+  <div ref="boxRef" @click="bounce">点击弹跳</div>
+</template>
+```
+
+### 指令式动画
+
+```vue
+<div
+  v-motion
+  :initial="{ opacity: 0, y: 20 }"
+  :enter="{ opacity: 1, y: 0 }"
+  :hovered="{ scale: 1.05 }"
+>
+  悬停放大
+</div>
+```
+
+### 列表自动动画
+
+```vue
+<script setup>
+import { useAutoAnimate } from '@formkit/auto-animate/vue'
+const [parent] = useAutoAnimate()
+</script>
+
+<template>
+  <ul ref="parent">
+    <li v-for="item in items" :key="item.id">{{ item.name }}</li>
+  </ul>
+</template>
+```
+
+## 🎭 图标使用
+
+```vue
+<script setup>
+import { Icon } from '@iconify/vue'
+</script>
+
+<template>
+  <!-- Material Design Icons -->
+  <Icon icon="mdi:home" />
+  
+  <!-- Heroicons -->
+  <Icon icon="heroicons:heart" class="text-2xl text-red-500" />
+  
+  <!-- Lucide -->
+  <Icon icon="lucide:settings" :style="{ fontSize: '32px' }" />
+</template>
+```
+
+图标搜索：https://icon-sets.iconify.design/
+
+## 🧰 VueUse 常用函数
+
+```typescript
+import {
+  useMouse,        // 鼠标位置
+  useWindowSize,   // 窗口大小
+  useClipboard,    // 剪贴板
+  useLocalStorage, // 本地存储
+  useOnline,       // 网络状态
+  useDark,         // 深色模式
+  useElementHover, // 元素悬停
+} from '@vueuse/core'
+```
+
+完整文档：https://vueuse.org/
 
 ## 🔧 自定义 Tauri 命令
 
@@ -116,7 +211,8 @@ error!("这是一条错误");
 ```rust
 #[tauri::command]
 fn my_command(arg: &str) -> String {
-    format!("收到参数: {}", arg)
+    info!("收到参数: {}", arg);
+    format!("处理结果: {}", arg)
 }
 ```
 
