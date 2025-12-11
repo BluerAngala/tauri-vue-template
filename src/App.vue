@@ -1,12 +1,16 @@
 <script setup lang="ts">
 import { RouterView, RouterLink, useRoute } from 'vue-router'
 import ThemeSelector from '@/components/ThemeSelector.vue'
+import LoginModal from '@/components/LoginModal.vue'
+import ToastContainer from '@/components/ToastContainer.vue'
 import { initLogger } from '@/composables/useLogger'
+import { useAuthStore } from '@/stores/auth'
 
 // 初始化日志系统
 initLogger()
 
 const route = useRoute()
+const authStore = useAuthStore()
 </script>
 
 <template>
@@ -41,6 +45,9 @@ const route = useRoute()
           </li>
         </ul>
         <ThemeSelector />
+        <button v-if="authStore.isLoggedIn" class="btn btn-ghost btn-sm" @click="authStore.logout()">
+          退出
+        </button>
       </div>
     </div>
 
@@ -48,5 +55,11 @@ const route = useRoute()
     <main :class="route.path.startsWith('/screen-content') ? '' : 'container mx-auto p-8 max-w-4xl'">
       <RouterView />
     </main>
+
+    <!-- 登录弹窗（未登录时显示，不可关闭） -->
+    <LoginModal v-if="!authStore.isLoggedIn" />
+
+    <!-- 全局 Toast 提示 -->
+    <ToastContainer />
   </div>
 </template>
