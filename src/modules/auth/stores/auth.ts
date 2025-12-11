@@ -1,7 +1,7 @@
 import { defineStore } from 'pinia'
 import { ref, computed } from 'vue'
 import { invoke } from '@tauri-apps/api/core'
-import { useToast } from '@/composables/useToast'
+import { useToast } from '@/core/composables'
 
 // 卡密校验接口地址
 const VERIFY_API =

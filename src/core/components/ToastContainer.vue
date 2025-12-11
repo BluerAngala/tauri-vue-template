@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { useToast } from '@/composables/useToast'
+import { useToast } from '@/core/composables'
 import { Icon } from '@iconify/vue'
 
 const { toasts, remove } = useToast()
