@@ -11,8 +11,8 @@ const route = useRoute()
 
 <template>
   <div class="min-h-screen bg-base-200">
-    <!-- 导航栏 -->
-    <div class="navbar bg-base-100 shadow-lg">
+    <!-- 导航栏（投屏内容页面隐藏） -->
+    <div v-if="!route.path.startsWith('/screen-content')" class="navbar bg-base-100 shadow-lg">
       <div class="flex-1">
         <span class="text-xl font-bold px-4">Tauri + Vue + DaisyUI</span>
       </div>
@@ -33,13 +33,19 @@ const route = useRoute()
           <li>
             <RouterLink to="/hooks" :class="{ active: route.path === '/hooks' }">Hooks</RouterLink>
           </li>
+          <li>
+            <RouterLink to="/cookie" :class="{ active: route.path === '/cookie' }">Cookie</RouterLink>
+          </li>
+          <li>
+            <RouterLink to="/screen" :class="{ active: route.path === '/screen' }">投屏</RouterLink>
+          </li>
         </ul>
         <ThemeSelector />
       </div>
     </div>
 
     <!-- 主内容区 -->
-    <main class="container mx-auto p-8 max-w-4xl">
+    <main :class="route.path.startsWith('/screen-content') ? '' : 'container mx-auto p-8 max-w-4xl'">
       <RouterView />
     </main>
   </div>

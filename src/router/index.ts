@@ -27,6 +27,21 @@ const routes: RouteRecordRaw[] = [
     name: 'Hooks',
     component: () => import('@/views/Hooks.vue'),
   },
+  {
+    path: '/cookie',
+    name: 'Cookie',
+    component: () => import('@/views/CookieReader.vue'),
+  },
+  {
+    path: '/screen',
+    name: 'Screen',
+    component: () => import('@/views/ScreenWindow.vue'),
+  },
+  {
+    path: '/screen-content',
+    name: 'ScreenContent',
+    component: () => import('@/views/ScreenContent.vue'),
+  },
 ]
 
 const router = createRouter({
