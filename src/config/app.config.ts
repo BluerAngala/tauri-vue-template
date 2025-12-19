@@ -10,7 +10,7 @@ export const appConfig = {
   // 功能开关
   features: {
     // 登录认证模块（卡密校验）
-    auth: true,
+    auth: false,
     // Toast 提示
     toast: true,
   },
